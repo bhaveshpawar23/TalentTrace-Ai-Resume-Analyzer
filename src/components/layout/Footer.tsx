@@ -15,11 +15,11 @@ const tips = [
 
 export function Footer() {
   return (
-    <footer className="w-full bg-white border-t overflow-hidden py-4">
-      <div className="relative flex">
-        <div className="flex animate-marquee whitespace-nowrap gap-12 items-center">
-          {[...tips, ...tips].map((tip, index) => (
-            <div key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+    <footer className="w-full bg-white border-t overflow-hidden py-4 shrink-0">
+      <div className="relative flex w-full">
+        <div className="flex animate-marquee whitespace-nowrap gap-12 items-center min-w-full">
+          {[...tips, ...tips, ...tips].map((tip, index) => (
+            <div key={index} className="flex items-center gap-2 text-sm text-muted-foreground shrink-0">
               <tip.icon className="h-4 w-4 text-primary" />
               <span>{tip.text}</span>
             </div>
@@ -32,10 +32,10 @@ export function Footer() {
       <style jsx global>{`
         @keyframes marquee {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          100% { transform: translateX(-33.33%); }
         }
         .animate-marquee {
-          animation: marquee 40s linear infinite;
+          animation: marquee 60s linear infinite;
         }
       `}</style>
     </footer>

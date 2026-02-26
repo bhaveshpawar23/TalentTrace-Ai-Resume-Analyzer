@@ -9,6 +9,7 @@ import { useUser, useFirestore, useCollection } from "@/firebase"
 import { collection, query, orderBy, limit } from "firebase/firestore"
 import { useMemo } from "react"
 import { format } from "date-fns"
+import { Badge } from "@/components/ui/badge"
 
 export default function DashboardPage() {
   const { user, loading: userLoading } = useUser()
@@ -28,7 +29,7 @@ export default function DashboardPage() {
   const stats = [
     { label: "Total Analyses", value: recentHistory?.length || "0", icon: History },
     { label: "Recent Score", value: recentHistory?.[0]?.score || "N/A", icon: BarChart3 },
-    { label: "Profile Status", value: user ? "Active" : "Pending", icon: Target },
+    { label: "App Status", value: "Ready", icon: Target },
   ]
 
   if (userLoading) {
@@ -42,8 +43,8 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-primary">Welcome Back, {user?.displayName || 'Friend'}</h1>
-        <p className="text-muted-foreground mt-1">Ready to take the next step in your career journey?</p>
+        <h1 className="text-3xl font-bold text-primary">Welcome to TalentTrace, {user?.displayName || 'Friend'}</h1>
+        <p className="text-muted-foreground mt-1">Ready to take the next step in your career journey? Start your analysis below.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -100,6 +101,16 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      {!user && (
+        <div className="bg-amber-50 border border-amber-200 p-4 rounded-lg flex items-start gap-3">
+          <Target className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-semibold text-amber-900">Guest Mode Active</p>
+            <p className="text-xs text-amber-700">You can use all tools, but your history will not be saved permanently. Sign up in the future to keep your progress!</p>
+          </div>
+        </div>
+      )}
 
       <div>
         <h2 className="text-xl font-bold mb-4">Recent Activity</h2>

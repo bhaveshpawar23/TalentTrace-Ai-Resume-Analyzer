@@ -10,10 +10,9 @@ import {
   History,
   Rocket,
   User,
-  LogOut
 } from "lucide-react"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import {
   Sidebar,
   SidebarContent,
@@ -26,9 +25,7 @@ import {
   SidebarMenuItem,
   SidebarFooter,
 } from "@/components/ui/sidebar"
-import { cn } from "@/lib/utils"
-import { useAuth, useUser } from "@/firebase"
-import { signOut } from "firebase/auth"
+import { useUser } from "@/firebase"
 
 const mainNav = [
   {
@@ -73,16 +70,7 @@ const accountNav = [
 
 export function AppSidebar() {
   const pathname = usePathname()
-  const router = useRouter()
-  const { auth } = useAuth()
   const { user } = useUser()
-
-  const handleLogout = async () => {
-    if (auth) {
-      await signOut(auth);
-      router.push("/login");
-    }
-  }
 
   return (
     <Sidebar variant="inset" collapsible="icon">
@@ -129,12 +117,6 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
-              <SidebarMenuItem>
-                <SidebarMenuButton onClick={handleLogout} tooltip="Logout" className="text-rose-500 hover:text-rose-600 hover:bg-rose-50">
-                  <LogOut className="h-5 w-5" />
-                  <span className="text-sm font-medium">Logout</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -142,11 +124,11 @@ export function AppSidebar() {
       <SidebarFooter className="border-t p-4 group-data-[collapsible=icon]:hidden">
         <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted transition-colors cursor-pointer">
           <div className="h-10 w-10 rounded-full bg-accent flex items-center justify-center text-white font-bold">
-            {user?.displayName?.[0] || user?.email?.[0]?.toUpperCase() || "U"}
+            {user?.displayName?.[0] || user?.email?.[0]?.toUpperCase() || "G"}
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-semibold truncate max-w-[120px]">{user?.displayName || "User"}</span>
-            <span className="text-xs text-muted-foreground">Premium Member</span>
+            <span className="text-sm font-semibold truncate max-w-[120px]">{user?.displayName || "Guest User"}</span>
+            <span className="text-xs text-muted-foreground">Explorer Mode</span>
           </div>
         </div>
       </SidebarFooter>

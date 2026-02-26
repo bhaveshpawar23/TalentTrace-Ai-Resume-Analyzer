@@ -4,7 +4,7 @@ import './globals.css';
 import {Toaster} from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'CareerCrafter AI | Optimize Your Career',
+  title: 'TalentTrace AI | Optimize Your Career',
   description: 'AI-powered resume optimization, ATS scoring, and job matching.',
 };
 

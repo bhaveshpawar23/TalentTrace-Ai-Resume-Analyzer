@@ -74,7 +74,7 @@ export function AppSidebar() {
             <FileText className="text-white h-5 w-5" />
           </div>
           <span className="font-bold text-xl tracking-tight text-primary group-data-[collapsible=icon]:hidden">
-            CareerCrafter
+            TalentTrace
           </span>
         </div>
       </SidebarHeader>

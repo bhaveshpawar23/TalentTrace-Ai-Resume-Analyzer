@@ -6,13 +6,14 @@ import {
   BarChart3,
   Target,
   LayoutDashboard,
-  Search,
   Settings,
   History,
-  Rocket
+  Rocket,
+  User,
+  LogOut
 } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   Sidebar,
   SidebarContent,
@@ -26,6 +27,8 @@ import {
   SidebarFooter,
 } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
+import { useAuth, useUser } from "@/firebase"
+import { signOut } from "firebase/auth"
 
 const mainNav = [
   {
@@ -52,6 +55,11 @@ const mainNav = [
 
 const accountNav = [
   {
+    title: "Profile",
+    url: "/dashboard/profile",
+    icon: User,
+  },
+  {
     title: "Analysis History",
     url: "/dashboard/history",
     icon: History,
@@ -65,18 +73,28 @@ const accountNav = [
 
 export function AppSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
+  const { auth } = useAuth()
+  const { user } = useUser()
+
+  const handleLogout = async () => {
+    if (auth) {
+      await signOut(auth);
+      router.push("/login");
+    }
+  }
 
   return (
     <Sidebar variant="inset" collapsible="icon">
       <SidebarHeader className="border-b px-6 py-4">
-        <div className="flex items-center gap-3">
+        <Link href="/dashboard" className="flex items-center gap-3">
           <div className="bg-primary p-2 rounded-lg flex items-center justify-center">
             <FileText className="text-white h-5 w-5" />
           </div>
           <span className="font-bold text-xl tracking-tight text-primary group-data-[collapsible=icon]:hidden">
             TalentTrace
           </span>
-        </div>
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -111,15 +129,23 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={handleLogout} tooltip="Logout" className="px-6 py-3 text-rose-500 hover:text-rose-600 hover:bg-rose-50">
+                  <LogOut className="h-5 w-5" />
+                  <span className="text-sm font-medium">Logout</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="border-t p-4 group-data-[collapsible=icon]:hidden">
         <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted transition-colors cursor-pointer">
-          <div className="h-10 w-10 rounded-full bg-accent flex items-center justify-center text-white font-bold">JD</div>
+          <div className="h-10 w-10 rounded-full bg-accent flex items-center justify-center text-white font-bold">
+            {user?.displayName?.[0] || user?.email?.[0]?.toUpperCase() || "U"}
+          </div>
           <div className="flex flex-col">
-            <span className="text-sm font-semibold">John Doe</span>
+            <span className="text-sm font-semibold">{user?.displayName || "User"}</span>
             <span className="text-xs text-muted-foreground">Premium Member</span>
           </div>
         </div>

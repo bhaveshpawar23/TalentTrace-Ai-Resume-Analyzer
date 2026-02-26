@@ -7,11 +7,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Progress } from "@/components/ui/progress"
-import { Loader2, BarChart3, CheckCircle2, ShieldCheck, FileCheck, LayoutGrid, Target } from "lucide-react"
+import { Loader2, ShieldCheck, CheckCircle2, LayoutGrid, Target, FileCheck } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
+import { useUser, useFirestore } from "@/firebase"
+import { collection, addDoc } from "firebase/firestore"
 
 export default function AtsScorePage() {
+  const { user } = useUser()
+  const { db } = useFirestore()
   const [resumeText, setResumeText] = useState("")
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState<AtsCompatibilityScoreGeneratorOutput | null>(null)
@@ -27,8 +31,19 @@ export default function AtsScorePage() {
     try {
       const output = await atsCompatibilityScoreGenerator({ resumeText })
       setResults(output)
+
+      // Save to history if logged in
+      if (user && db) {
+        addDoc(collection(db, "users", user.uid, "history"), {
+          type: "ats",
+          title: "ATS Compatibility Scan",
+          score: `${output.atsScore}/100`,
+          timestamp: new Date().toISOString(),
+          payload: output
+        })
+      }
     } catch (error) {
-      toast({ title: "Analysis Failed", description: "We couldn't generate your ATS score. Please try again.", variant: "destructive" })
+      toast({ title: "Analysis Failed", description: "We couldn't generate your ATS score.", variant: "destructive" })
     } finally {
       setLoading(false)
     }

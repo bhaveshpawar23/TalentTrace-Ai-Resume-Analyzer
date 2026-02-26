@@ -1,20 +1,48 @@
 
+"use client"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Rocket, BarChart3, Target, ArrowRight, History } from "lucide-react"
+import { Rocket, BarChart3, Target, ArrowRight, History, Loader2 } from "lucide-react"
 import Link from "next/link"
+import { useUser, useFirestore, useCollection } from "@/firebase"
+import { collection, query, orderBy, limit } from "firebase/firestore"
+import { useMemo } from "react"
+import { format } from "date-fns"
 
 export default function DashboardPage() {
+  const { user, loading: userLoading } = useUser()
+  const { db } = useFirestore()
+
+  const recentHistoryQuery = useMemo(() => {
+    if (!db || !user) return null
+    return query(
+      collection(db, "users", user.uid, "history"),
+      orderBy("timestamp", "desc"),
+      limit(3)
+    )
+  }, [db, user])
+
+  const { data: recentHistory, loading: historyLoading } = useCollection(recentHistoryQuery)
+
   const stats = [
-    { label: "Total Analyses", value: "12", icon: History },
-    { label: "Avg ATS Score", value: "74", icon: BarChart3 },
-    { label: "Match Success", value: "82%", icon: Target },
+    { label: "Total Analyses", value: recentHistory?.length || "0", icon: History },
+    { label: "Recent Score", value: recentHistory?.[0]?.score || "N/A", icon: BarChart3 },
+    { label: "Profile Status", value: user ? "Active" : "Pending", icon: Target },
   ]
+
+  if (userLoading) {
+    return (
+      <div className="flex h-[400px] items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-primary">Welcome Back, John</h1>
+        <h1 className="text-3xl font-bold text-primary">Welcome Back, {user?.displayName || 'Friend'}</h1>
         <p className="text-muted-foreground mt-1">Ready to take the next step in your career journey?</p>
       </div>
 
@@ -78,20 +106,26 @@ export default function DashboardPage() {
         <Card>
           <CardContent className="p-0">
             <div className="divide-y">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors">
+              {historyLoading ? (
+                <div className="p-8 text-center text-muted-foreground">Loading activity...</div>
+              ) : recentHistory?.length === 0 ? (
+                <div className="p-8 text-center text-muted-foreground italic">No recent scans. Start your first analysis above!</div>
+              ) : recentHistory?.map((item) => (
+                <div key={item.id} className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors">
                   <div className="flex items-center gap-4">
                     <div className="bg-primary/10 p-2 rounded-full">
                       <BarChart3 className="h-4 w-4 text-primary" />
                     </div>
                     <div>
-                      <p className="font-medium">ATS Scan: Software Engineer Resume</p>
-                      <p className="text-xs text-muted-foreground">Last processed 2 days ago</p>
+                      <p className="font-medium">{item.title}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {item.timestamp ? format(new Date(item.timestamp), 'MMM d, yyyy h:mm a') : 'Recently'}
+                      </p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-primary">72/100</p>
-                    <p className="text-xs text-muted-foreground">Good Match</p>
+                    <p className="font-bold text-primary">{item.score}</p>
+                    <Badge variant="secondary" className="text-[10px] uppercase">{item.type}</Badge>
                   </div>
                 </div>
               ))}

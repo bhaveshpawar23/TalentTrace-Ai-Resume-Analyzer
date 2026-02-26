@@ -104,7 +104,7 @@ export function AppSidebar() {
               {mainNav.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild tooltip={item.title} isActive={pathname === item.url}>
-                    <Link href={item.url} className={cn("px-6 py-3", pathname === item.url && "bg-sidebar-accent text-sidebar-accent-foreground")}>
+                    <Link href={item.url}>
                       <item.icon className="h-5 w-5" />
                       <span className="text-sm font-medium">{item.title}</span>
                     </Link>
@@ -122,7 +122,7 @@ export function AppSidebar() {
               {accountNav.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild tooltip={item.title} isActive={pathname === item.url}>
-                    <Link href={item.url} className={cn("px-6 py-3", pathname === item.url && "bg-sidebar-accent text-sidebar-accent-foreground")}>
+                    <Link href={item.url}>
                       <item.icon className="h-5 w-5" />
                       <span className="text-sm font-medium">{item.title}</span>
                     </Link>
@@ -130,7 +130,7 @@ export function AppSidebar() {
                 </SidebarMenuItem>
               ))}
               <SidebarMenuItem>
-                <SidebarMenuButton onClick={handleLogout} tooltip="Logout" className="px-6 py-3 text-rose-500 hover:text-rose-600 hover:bg-rose-50">
+                <SidebarMenuButton onClick={handleLogout} tooltip="Logout" className="text-rose-500 hover:text-rose-600 hover:bg-rose-50">
                   <LogOut className="h-5 w-5" />
                   <span className="text-sm font-medium">Logout</span>
                 </SidebarMenuButton>
@@ -145,7 +145,7 @@ export function AppSidebar() {
             {user?.displayName?.[0] || user?.email?.[0]?.toUpperCase() || "U"}
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-semibold">{user?.displayName || "User"}</span>
+            <span className="text-sm font-semibold truncate max-w-[120px]">{user?.displayName || "User"}</span>
             <span className="text-xs text-muted-foreground">Premium Member</span>
           </div>
         </div>

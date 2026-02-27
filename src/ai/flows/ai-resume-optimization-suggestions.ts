@@ -10,8 +10,6 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-export const maxDuration = 60;
-
 const ResumeOptimizationInputSchema = z.object({
   resumeText: z.string().describe('The full text content of the user\'s resume.'),
 });

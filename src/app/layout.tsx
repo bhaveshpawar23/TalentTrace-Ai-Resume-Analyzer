@@ -5,8 +5,11 @@ import {Toaster} from "@/components/ui/toaster";
 import { FirebaseClientProvider } from '@/firebase';
 
 export const metadata: Metadata = {
-  title: 'TalentTrace AI | Professional Career Optimization',
+  title: 'TalentTrace AI',
   description: 'Advanced AI-powered resume optimization, ATS compatibility scanning, and precision job matching tools.',
+  icons: {
+    icon: '/icon.svg',
+  },
 };
 
 export default function RootLayout({

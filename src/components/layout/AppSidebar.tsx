@@ -10,6 +10,7 @@ import {
   History,
   Rocket,
   User,
+  Sparkles,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -75,12 +76,12 @@ export function AppSidebar() {
   return (
     <Sidebar variant="inset" collapsible="icon">
       <SidebarHeader className="border-b px-6 py-4">
-        <Link href="/dashboard" className="flex items-center gap-3">
-          <div className="bg-primary p-2 rounded-lg flex items-center justify-center">
-            <FileText className="text-white h-5 w-5" />
+        <Link href="/dashboard" className="flex items-center gap-3 group/logo">
+          <div className="bg-primary p-2 rounded-xl flex items-center justify-center shadow-md transition-transform group-hover/logo:scale-105">
+            <Sparkles className="text-white h-5 w-5" />
           </div>
-          <span className="font-bold text-xl tracking-tight text-primary group-data-[collapsible=icon]:hidden">
-            TalentTrace
+          <span className="font-black text-xl tracking-tighter text-primary group-data-[collapsible=icon]:hidden uppercase">
+            TALENT<span className="text-accent">TRACE</span>
           </span>
         </Link>
       </SidebarHeader>

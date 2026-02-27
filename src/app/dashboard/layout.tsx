@@ -17,7 +17,7 @@ export default function DashboardLayout({
           <SidebarTrigger />
           <Separator orientation="vertical" className="mr-2 h-4" />
           <div className="flex-1 min-w-0">
-             <h1 className="text-sm font-medium text-muted-foreground truncate">TalentTrace AI Workspace</h1>
+             <h1 className="text-sm font-bold text-primary tracking-tight">TalentTrace <span className="text-muted-foreground font-medium">AI Intelligence Hub</span></h1>
           </div>
         </header>
         <div className="flex-1 p-6 overflow-y-auto w-full">

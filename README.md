@@ -18,5 +18,20 @@ TalentTrace is a high-performance career optimization platform built with the la
 - **Resume Optimizer**: AI-driven feedback and Job Readiness Scoring.
 - **ATS Compatibility**: Detailed analysis of how resume parsing algorithms see your profile.
 - **Job Match Tool**: Real-time comparison between your skills and job descriptions.
-- **Analysis History**: Secure storage of your previous reports via Firestore.
+- **Analysis History**: Secure storage of your previous reports via Firestore (Authenticated mode).
 - **Modern Dashboard**: A clean, responsive workspace for career growth.
+
+## Deployment
+
+For deploying TalentTrace to **Firebase App Hosting**, the following root files are essential:
+
+1.  **`package.json`**: Contains the `build` and `start` scripts required for the production environment.
+2.  **`apphosting.yaml`**: Configures the App Hosting runtime (e.g., max instances).
+3.  **`next.config.ts`**: Defines the build-time configuration for the Next.js framework.
+4.  **`src/app/layout.tsx`**: The root layout file for the user interface and context providers.
+
+## Getting Started
+
+1.  Explore the dashboard tools directly.
+2.  Paste your resume text into the Optimizer or Match tool.
+3.  Review the AI-generated insights and readiness scores.

@@ -21,14 +21,15 @@ TalentTrace is a high-performance career optimization platform built with the la
 - **Analysis History**: Secure storage of your previous reports via Firestore (Authenticated mode).
 - **Modern Dashboard**: A clean, responsive workspace for career growth.
 
-## Deployment
+## Deployment Root Files
 
 For deploying TalentTrace to **Firebase App Hosting**, the following root files are essential:
 
-1.  **`package.json`**: Contains the `build` and `start` scripts required for the production environment.
-2.  **`apphosting.yaml`**: Configures the App Hosting runtime (e.g., max instances).
-3.  **`next.config.ts`**: Defines the build-time configuration for the Next.js framework.
-4.  **`src/app/layout.tsx`**: The root layout file for the user interface and context providers.
+1.  `/package.json`: Contains the `build` and `start` scripts required for the production environment.
+2.  `/apphosting.yaml`: Configures the App Hosting runtime (e.g., max instances).
+3.  `/next.config.ts`: Defines the build-time configuration for the Next.js framework.
+4.  `/src/app/layout.tsx`: The root layout file for the user interface and context providers.
+5.  `/src/app/page.tsx`: The entry point for the web application.
 
 ## Getting Started
 

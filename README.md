@@ -9,7 +9,7 @@ TalentTrace is a high-performance career optimization platform built with the la
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **UI Components**: [ShadCN UI](https://ui.shadcn.com/)
-- **AI Engine**: [Genkit](https://firebase.google.com/docs/genkit) powered by **Google Gemini 2.5 Flash**
+- **AI Engine**: [Genkit](https://firebase.google.com/docs/genkit) powered by **Google Gemini 1.5 Flash**
 - **Backend**: [Firebase](https://firebase.google.com/) (Firestore & Authentication)
 - **Icons**: [Lucide React](https://lucide.dev/)
 
